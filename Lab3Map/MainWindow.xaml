@@ -1,0 +1,50 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab3Map"
+        xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" x:Class="Lab3Map.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="550" Width="850" ResizeMode="NoResize">
+    <Grid>
+        <WindowsPresentation:GMapControl Name="Map" Height="485" Width="625" Loaded="Map_Loaded" MouseLeftButtonDown="Map_MouseLeftButtonDown" Margin="210,15,9,0" VerticalAlignment="Top" />
+        <!--<Label Content="Label" Height="440" Width="625" Margin="210,10,10,0" VerticalAlignment="Top" Background="#FFFF9D9D"/>-->
+        
+        <GroupBox Header="Cursor Mode" HorizontalAlignment="Left" Height="80" Width="190" Margin="10,10,0,0" VerticalAlignment="Top">
+            <WrapPanel HorizontalAlignment="Left" Height="50" Width="160" Margin="10,10,-2,0" VerticalAlignment="Top" Orientation="Vertical">
+                <RadioButton x:Name="buttonCreationMode" Content="Creation of objects" Width="160" Height="25"/>
+                <RadioButton x:Name="buttonSearchMode" Content="Search for nearby objects" Width="160" Height="25"/>
+            </WrapPanel>
+        </GroupBox>
+        
+        <GroupBox Header="Add" HorizontalAlignment="Left" Height="155" Margin="10,100,0,0" VerticalAlignment="Top" Width="190">
+            <WrapPanel HorizontalAlignment="Left" Height="115" Width="160" Margin="10,10,0,0" VerticalAlignment="Top">
+                <ComboBox x:Name="comboBox" Height="25" Width="160">
+                    <ComboBoxItem Content="Area"/>
+                    <ComboBoxItem Content="Car"/>
+                    <ComboBoxItem Content="Route"/>
+                    <ComboBoxItem Content="Human"/>
+                    <ComboBoxItem Content="Location"/>
+                </ComboBox>
+                <Label Height="5" Width="160"/>
+                <TextBox x:Name="textNameAdd" Height="25" Width="160" TextWrapping="Wrap" Text="Enter name..." HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                <Label Height="5" Width="160"/>
+                <Button x:Name="butOKAdd" Content="OK" Height="25" Width="160" Click="butOKAdd_Click"/>
+                <Label Height="5" Width="160"/>
+                <Button x:Name="butReset" Content="Reset points" Height="25" Width="160" Click="butReset_Click"/>
+            </WrapPanel>
+        </GroupBox>
+        
+        <GroupBox Header="Search" Height="235" Width="190" HorizontalAlignment="Left" Margin="10,265,0,0" VerticalAlignment="Top">
+            <WrapPanel Height="195" Width="160" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+                <TextBox x:Name="textNameSearch" Height="25" Width="160" TextWrapping="Wrap" Text="..." HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                <Label Height="5" Width="160"/>
+                <Button x:Name="butOKSearch" Content="OK" Height="25" Width="160" Click="butOKSearch_Click"/>
+                <Label Content="Results" Height="25" Width="160"/>
+                <ListBox x:Name="listResults" Height="115" Width="160" MouseDoubleClick="listResults_MouseDoubleClick"/>
+            </WrapPanel>
+        </GroupBox>
+
+    </Grid>
+</Window>
