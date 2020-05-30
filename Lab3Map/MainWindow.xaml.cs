@@ -70,15 +70,22 @@ namespace Lab3Map
 
                 foreach (MapObject obj in mapObjects)
                 {
-                    listResults.Items.Add(obj.GetTitle() + " " + obj.GetDistance(point));
+                    listResults.Items.Add(obj.GetTitle() + " " + Math.Round(obj.GetDistance(point), 2));
                 }
             }
         }
 
         private void butOKAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (buttonCreationMode.IsChecked == true && activePoints.Count != 0)
-                CreateMapObject();
+            if (buttonCreationMode.IsChecked == true)
+            {
+                if (textNameAdd.Text.ToString() != "Enter name..." || textNameAdd.Text.ToString() != "")
+                    CreateMapObject();
+                else
+                    MessageBox.Show("Enter name of object");
+            }
+            else
+                MessageBox.Show("Pick 'Creation of objects' Cursor Mode");
         }
 
         private void CreateMapObject()
@@ -86,38 +93,74 @@ namespace Lab3Map
             switch (comboBox.SelectedIndex)
             {
                 case 0:
-                    Area area = new Area(textNameAdd.Text.ToString(), activePoints);
-                    mapObjects.Add(area);
-                    Map.Markers.Add(area.GetMarker());
-                    activePoints.Clear();
+                    if (activePoints.Count >= 3)
+                    {
+                        Area area = new Area(textNameAdd.Text.ToString(), activePoints);
+                        mapObjects.Add(area);
+                        Map.Markers.Add(area.GetMarker());
+                        activePoints.Clear();
+                    }
+                    else if (activePoints.Count < 3)
+                        MessageBox.Show("Count of active points must be bigger two");
+                        activePoints.Clear();
                     break;
 
                 case 1:
-                    Car car = new Car(textNameAdd.Text.ToString(), activePoints.Last());
-                    mapObjects.Add(car);
-                    Map.Markers.Add(car.GetMarker());
-                    activePoints.Clear();
+                    if (activePoints.Count > 0)
+                    {
+                        Car car = new Car(textNameAdd.Text.ToString(), activePoints.Last());
+                        mapObjects.Add(car);
+                        Map.Markers.Add(car.GetMarker());
+                        activePoints.Clear();
+                    }
+                    else if (activePoints.Count < 1)
+                    {
+                        MessageBox.Show("Count of active points must be bigger zero");
+                        activePoints.Clear();
+                    }
                     break;
 
                 case 2:
-                    Classes.Route route = new Classes.Route(textNameAdd.Text.ToString(), activePoints);
-                    mapObjects.Add(route);
-                    Map.Markers.Add(route.GetMarker());
-                    activePoints.Clear();
+                    if (activePoints.Count >= 2)
+                    {
+                        Classes.Route route = new Classes.Route(textNameAdd.Text.ToString(), activePoints);
+                        mapObjects.Add(route);
+                        Map.Markers.Add(route.GetMarker());
+                        activePoints.Clear();
+                    }
+                    else if (activePoints.Count < 2 )
+                        MessageBox.Show("Count of active points must be bigger one");
+                        activePoints.Clear();
                     break;
 
                 case 3:
-                    Human human = new Human(textNameAdd.Text.ToString(), activePoints.Last());
-                    mapObjects.Add(human);
-                    Map.Markers.Add(human.GetMarker());
-                    activePoints.Clear();
+                    if (activePoints.Count > 0)
+                    {
+                        Human human = new Human(textNameAdd.Text.ToString(), activePoints.Last());
+                        mapObjects.Add(human);
+                        Map.Markers.Add(human.GetMarker());
+                        activePoints.Clear();
+                    }
+                    else if (activePoints.Count != 1)
+                    {
+                        MessageBox.Show("Count of active points must be bigger zero");
+                        activePoints.Clear();
+                    }
                     break;
 
                 case 4:
-                    Classes.Location location = new Classes.Location(textNameAdd.Text.ToString(), activePoints.Last());
-                    mapObjects.Add(location);
-                    Map.Markers.Add(location.GetMarker());
-                    activePoints.Clear();
+                    if (activePoints.Count > 0)
+                    {
+                        Classes.Location location = new Classes.Location(textNameAdd.Text.ToString(), activePoints.Last());
+                        mapObjects.Add(location);
+                        Map.Markers.Add(location.GetMarker());
+                        activePoints.Clear();
+                    }
+                    else if (activePoints.Count != 1)
+                    {
+                        MessageBox.Show("Count of active points must be bigger zero");
+                        activePoints.Clear();
+                    }
                     break;
             }
         }
@@ -126,19 +169,36 @@ namespace Lab3Map
 
         private void butOKSearch_Click(object sender, RoutedEventArgs e)
         {
-            if (textNameSearch.ToString() == "..." || textNameSearch.ToString() == "")
+            listResults.Items.Clear();
+
+            if (textNameSearch.Text.ToString() == "..." || textNameSearch.Text.ToString() == "")
                 MessageBox.Show("Введите имя искомого объекта");
             else
             {
                 foreach (MapObject obj in mapObjects)
                 {
-                    if (obj.GetTitle() == textNameSearch.ToString())
+                    if (obj.GetTitle().Contains(textNameSearch.Text.ToString()))
+                    {
                         listResults.Items.Add(obj.GetTitle().ToString());
+                    }
                 }
             }
         }
 
-        private void listResults_MouseDoubleClick(object sender, MouseButtonEventArgs e) => GetFocus(listResults.SelectedItem);
+        private void listResults_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (listResults.SelectedItem.ToString().Contains(" "))
+            {
+                char srch = ' ';
+                string str = listResults.SelectedItem.ToString();
+                int ind = str.IndexOf(srch);
+                str.Remove(ind);
+                
+                GetFocus(str);
+            }
+            else
+                GetFocus(listResults.SelectedItem);
+        }
 
         private void GetFocus(object selectedItem)
         {
@@ -155,5 +215,7 @@ namespace Lab3Map
                 }
             }
         }
+
+        private void butClear_Click(object sender, RoutedEventArgs e) => Map.Markers.Clear();
     }
 }

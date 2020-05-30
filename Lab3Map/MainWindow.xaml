@@ -32,7 +32,8 @@
                 <Label Height="5" Width="160"/>
                 <Button x:Name="butOKAdd" Content="OK" Height="25" Width="160" Click="butOKAdd_Click"/>
                 <Label Height="5" Width="160"/>
-                <Button x:Name="butReset" Content="Reset points" Height="25" Width="160" Click="butReset_Click"/>
+                <Button x:Name="butReset" Content="Reset points" Height="25" Width="80" Click="butReset_Click"/>
+                <Button x:Name="butClear" Content="Clear Markers" Height="25" Width="80" Click="butClear_Click"/>
             </WrapPanel>
         </GroupBox>
         
